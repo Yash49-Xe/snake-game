@@ -21,6 +21,18 @@
   --space-xxl : 40px;
   --space-xxxl : 48px;
 
+  /* Borders */
+  --border-primary-color : #333333;
+
+  /* Border radius */
+  --border-radius-xs: 4px;
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 20px;
+  --border-radius-xxl: 24px;
+  --border-radius-xxxl: 28px;
+
 }
 
 html,
@@ -42,11 +54,35 @@ section {
 }
 
 section {
-  padding: 40px;
+  padding: var(--space-xxl);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: var(--space-lg);
 }
 
 section .infos {
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.info {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--border-primary-color);
+  border-radius: var(--border-radius-sm);
+}
+
+.board {
+  border: 1px solid var(--border-primary-color);
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+  grid-template-rows: repeat(auto-fill, minmax(30px, 1fr));
+}
+
+.block {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border-primary-color);
 }
