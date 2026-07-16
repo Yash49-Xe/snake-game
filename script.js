@@ -5,18 +5,15 @@ const blockWidth = 50;
 
 const cols = Math.floor(board.clientWidth / blockWidth);
 const rows = Math.floor(board.clientHeight / blockHeight);
+let intervalId = null;
 
 let blocks = [];
 let snake = [{
   x : 1,
   y : 3
-}, {
-  x : 1,
-  y : 4
-}, {
-  x : 1,
-  y : 5
 }]
+
+let direction = 'down';
 
 // for (let i = 0; i < rows * cols; i++) {
 //   const block = document.createElement('div');
@@ -40,3 +37,43 @@ function render() {
     blocks[`${segment.x}, ${segment.y}`].classList.add('fill');
   })
 }
+
+intervalId = setInterval(() => {
+
+  let head = null;
+
+  if (direction === 'left') {
+    head = {x : snake[0].x, y : snake[0].y - 1};
+  } else if (direction === 'right') {
+    head = {x : snake[0].x, y : snake[0].y + 1};
+  } else if (direction === 'up') {
+    head = {x : snake[0].x - 1, y : snake[0].y};
+  } else {
+    head = {x : snake[0].x + 1, y : snake[0].y};
+  }
+
+  if (head.x < 0 || head.x >= rows || head.y < 0 || head.y >= cols) {
+    alert('Game over!');
+    clearInterval(intervalId);
+  }
+
+  snake.forEach(segment => {
+    blocks[`${segment.x}, ${segment.y}`].classList.remove('fill');
+  })
+  snake.unshift(head);
+  snake.pop();
+
+  render();
+},350);
+
+addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight") {
+    direction = 'right';
+  } else if (event.key === 'ArrowLeft') {
+    direction = 'left';
+  } else if (event.key === 'ArrowDown') {
+    direction = 'down';
+  } else if (event.key === 'ArrowUp') {
+    direction = 'up';
+  }
+})
